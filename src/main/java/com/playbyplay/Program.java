@@ -2,6 +2,7 @@ package com.playbyplay;
 
 import com.playbyplay.dao.DataImporter;
 import com.playbyplay.dao.JdbcPlayDao;
+import com.playbyplay.dao.JdbcPlayerDao;
 import com.playbyplay.model.Play;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -14,8 +15,8 @@ public class Program {
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres1");
 
-        DataImporter dataImporter = new DataImporter(dataSource);
-        dataImporter.updateDatabase();
+        JdbcPlayerDao playerImporter = new JdbcPlayerDao(dataSource);
+        playerImporter.updatePlayers();
 
 
 

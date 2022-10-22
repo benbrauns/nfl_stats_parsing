@@ -31,7 +31,7 @@ public class Player {
     private Integer gsis_it_id;
     private String short_name;
     private String smart_id;
-    private URL headshot;
+    private String headshot;
     private Integer draft_number;
     private String uniform_number;
     private Integer draft_round;
@@ -253,19 +253,11 @@ public class Player {
         this.smart_id = smart_id;
     }
 
-    public URL getHeadshot() {
+    public String getHeadshot() {
         return headshot;
     }
 
-    public String getHeadshotString() {
-        if (headshot != null) {
-            return headshot.toString();
-        } else {
-            return "";
-        }
-    }
-
-    public void setHeadshot(URL headshot) {
+    public void setHeadshot(String headshot) {
         this.headshot = headshot;
     }
 
