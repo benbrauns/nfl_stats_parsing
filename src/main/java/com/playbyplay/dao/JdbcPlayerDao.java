@@ -2,6 +2,7 @@ package com.playbyplay.dao;
 
 import com.playbyplay.Logger;
 import com.playbyplay.dao.importutil.CsvReader;
+import com.playbyplay.model.Player;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
@@ -12,7 +13,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcPlayerDao extends DataImporter {
+@SuppressWarnings("SpellCheckingInspection")
+public class JdbcPlayerDao extends BaseDao implements PlayerDao {
     private URL playersUrl;
     public JdbcPlayerDao(DataSource dataSource) {
         super(dataSource);
@@ -23,7 +25,8 @@ public class JdbcPlayerDao extends DataImporter {
         }
     }
 
-    public void updatePlayers() {
+    @Override
+    public void updatePlayersFromSourceCsv() {
         String address = RELEASES_BASE_URL + "players/players.csv";
 
         //TODO: enable this but I just don't want to keep hitting the github page with requests
@@ -52,8 +55,8 @@ public class JdbcPlayerDao extends DataImporter {
     }
 
 
-
-    private int playerExists(Player player) {
+    @Override
+    public int playerExists(Player player) {
         String sql =
                 "SELECT * " +
                         "FROM player " +
@@ -62,13 +65,11 @@ public class JdbcPlayerDao extends DataImporter {
         if (rowSet.next()) {
             return rowSet.getInt("player_id");
         }
-
         return -1;
-
     }
 
-
-    private int insertPlayer(Player player) {
+    @Override
+    public int insertPlayer(Player player) {
         if (player.getGsis_id().equals("")) {
             Exception e = new Exception("Player {" + player + "} has no gsid_id");
             Logger.logError(e);
@@ -138,7 +139,7 @@ public class JdbcPlayerDao extends DataImporter {
 
 
     private Player mapPlayer(ResultSet reader) {
-        Player player = new Player();
+        Player player= new Player();
         try {
             player.setStatus(reader.getString("status"));
             player.setDisplay_name(reader.getString("display_name"));
@@ -179,7 +180,6 @@ public class JdbcPlayerDao extends DataImporter {
         } catch (Exception e) {
             Logger.logError(e);
         }
-
         return player;
     }
 }

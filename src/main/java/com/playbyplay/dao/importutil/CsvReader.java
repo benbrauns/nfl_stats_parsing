@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,23 +78,6 @@ public class CsvReader implements ResultSet {
         return null;
     }
 
-    public URL getUrl(String columnName) {
-        try {
-            if (validColName(columnName)) {
-                String colVal = getColValue(columnName);
-                try {
-                    URL url = new URL(colVal);
-                    return url;
-                } catch (Exception e){
-                    return null;
-                }
-            }
-        } catch (Exception e) {
-            ImportLogger.logError(e);
-        }
-        return null;
-    }
-
     public boolean validColName(String columnName) {
         try {
             if (this.columnNameIndexes.containsKey(columnName)) {
@@ -117,20 +101,6 @@ public class CsvReader implements ResultSet {
         }
         return null;
     }
-
-    //    public String get(String columnName) {
-//        try {
-//            if (validColName(columnName)) {
-//
-//            } else {
-//                throw new IllegalArgumentException("Column name doesn't exist");
-//            }
-//        } catch (Exception e) {
-//            ImportLogger.logError(e);
-//        }
-//        return null;
-//    }
-
 
     @Override
     public void close() throws SQLException {
@@ -224,9 +194,7 @@ public class CsvReader implements ResultSet {
 
     private void splitLine() {
         currentLineArr = new String[columnNameIndexes.size()];
-        for (int i = 0; i < currentLineArr.length; i++) {
-            currentLineArr[i] = "";
-        }
+        Arrays.fill(currentLineArr, "");
 
         try {
             if (!currentLine.contains(",")) {
@@ -247,6 +215,10 @@ public class CsvReader implements ResultSet {
                     } else if (c == '\"') {
                         quoteOpened = false;
                     }
+                }
+                //it doesn't fill in the last one
+                if (currentLineArr.length > 0) {
+                    currentLineArr[currentColumn] = currentLine.substring(currentIndex).replace("\n", "");
                 }
             }
         }
@@ -408,7 +380,11 @@ public class CsvReader implements ResultSet {
 
     @Override
     public int findColumn(String columnLabel) throws SQLException {
-        return 0;
+        if (columnNameIndexes.containsKey(columnLabel)) {
+            return columnNameIndexes.get(columnLabel);
+        } else {
+            throw new SQLException("Column doesn't exist");
+        }
     }
 
     @Override

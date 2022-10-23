@@ -1,4 +1,4 @@
-package com.playbyplay.dao;
+package com.playbyplay.model;
 import java.net.URL;
 import java.time.LocalDate;
 

@@ -1,26 +1,24 @@
 package com.playbyplay;
 
-import com.playbyplay.dao.DataImporter;
-import com.playbyplay.dao.JdbcPlayDao;
 import com.playbyplay.dao.JdbcPlayerDao;
-import com.playbyplay.model.Play;
+import com.playbyplay.dao.JdbcTeamDao;
+import com.playbyplay.dao.PlayerDao;
+import com.playbyplay.dao.TeamDao;
+import com.playbyplay.dao.importutil.DataImporter;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.sql.DataSource;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class Program {
     public static void main(String[] args) {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/NFL_PBP");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres1");
-
-        JdbcPlayerDao playerImporter = new JdbcPlayerDao(dataSource);
-        playerImporter.updatePlayers();
-
-
-
-
+        DataImporter dataImporter = new DataImporter();
+        dataImporter.updateDatabase();
 
     }
+
+
 }

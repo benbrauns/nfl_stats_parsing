@@ -9,4 +9,7 @@ public class Logger {
         System.out.printf("%s player(s) were added", numOfPlayers);
     }
 
+    public static void logGameYearAdded(String url) {
+        System.out.println(url);
+    }
 }
