@@ -20,14 +20,23 @@ public class DataImporter {
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres1");
 
+
+
+        List<String> pbpLinks = getPbpLinks();
+
         TeamDao teamDao = new JdbcTeamDao(dataSource);
         teamDao.createTeams();
 
-        GameDao gameDao = new JdbcGameDao(dataSource);
-        gameDao.importGames(getPbpLinks());
+        PlayerDao playerImporter = new JdbcPlayerDao(dataSource);
+        playerImporter.updatePlayersFromSourceCsv();
 
-//        PlayerDao playerImporter = new JdbcPlayerDao(dataSource);
-//        playerImporter.updatePlayersFromSourceCsv();
+        GameDao gameDao = new JdbcGameDao(dataSource);
+        gameDao.importGames(pbpLinks);
+
+        PlayDao playDao = new JdbcPlayDao(dataSource);
+        playDao.importPlays(pbpLinks);
+
+
     }
 
     private List<String> getPbpLinks() {
@@ -35,6 +44,7 @@ public class DataImporter {
         List<String> years = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
+        //TODO: change this to 1999 leaving as 2022 so it only imports one year
         for (Integer i = 1999; i <= currentYear; i++) {
             String address = (linkFront + i.toString() + ".csv");
             if (urlExists(address)) {

@@ -1,12 +1,15 @@
 package com.playbyplay.model;
 
+import java.time.LocalDate;
+
 public class Game {
     private String game_id;
-    private int home_team;
-    private int away_team;
+    private String home_team;
+    private String away_team;
     private int season;
     private String season_type;
     private int week;
+    private LocalDate game_date;
 
     public String getGame_id() {
         return game_id;
@@ -16,19 +19,19 @@ public class Game {
         this.game_id = game_id;
     }
 
-    public int getHome_team() {
+    public String getHome_team() {
         return home_team;
     }
 
-    public void setHome_team(int home_team) {
+    public void setHome_team(String home_team) {
         this.home_team = home_team;
     }
 
-    public int getAway_team() {
+    public String getAway_team() {
         return away_team;
     }
 
-    public void setAway_team(int away_team) {
+    public void setAway_team(String away_team) {
         this.away_team = away_team;
     }
 
@@ -54,5 +57,13 @@ public class Game {
 
     public void setWeek(int week) {
         this.week = week;
+    }
+
+    public LocalDate getGame_date() {
+        return game_date;
+    }
+
+    public void setGame_date(LocalDate game_date) {
+        this.game_date = game_date;
     }
 }

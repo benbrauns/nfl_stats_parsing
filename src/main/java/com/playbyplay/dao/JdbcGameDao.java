@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
 import java.net.URL;
+import java.sql.Date;
 import java.util.*;
 
 public class JdbcGameDao extends BaseDao implements GameDao {
@@ -23,7 +24,7 @@ public class JdbcGameDao extends BaseDao implements GameDao {
             validateTeamsExist();
             String currentYear = getCurrentYear().toString();
             for (String year : pbpLinks) {
-                if (!year.contains(currentYear)) {
+                if (!currentYear.equals("-1") && !year.contains(currentYear)) {
                     continue;
                 }
                 URL url = new URL(year);
@@ -54,10 +55,10 @@ public class JdbcGameDao extends BaseDao implements GameDao {
     public String insertGame(Game game) {
         if (gameExists(game)) return "";
         String sql =
-                "INSERT INTO game (game_id, home_team, away_team, season, season_type, week) " +
-                        "VALUES (?, ?, ?, ?, ?, ?) " +
+                "INSERT INTO game (game_id, home_team, away_team, season, season_type, week, game_date) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?) " +
                         "RETURNING game_id;";
-        String id = jdbcTemplate.queryForObject(sql, String.class, game.getGame_id(), game.getHome_team(), game.getAway_team(), game.getSeason(), game.getSeason_type(), game.getWeek());
+        String id = jdbcTemplate.queryForObject(sql, String.class, game.getGame_id(), game.getHome_team(), game.getAway_team(), game.getSeason(), game.getSeason_type(), game.getWeek(), game.getGame_date());
         return validateString(id);
     }
 
@@ -84,7 +85,7 @@ public class JdbcGameDao extends BaseDao implements GameDao {
         }
     }
 
-    private Integer getCurrentYear() {
+    public Integer getCurrentYear() {
         String sql =
                 "SELECT MAX(season)\n" +
                 "FROM game;";
@@ -126,11 +127,15 @@ public class JdbcGameDao extends BaseDao implements GameDao {
         Game game = new Game();
         try {
             game.setGame_id(reader.getString("game_id"));
-            game.setHome_team(teamDao.getTeamIdFromAbbr(reader.getString("home_team")));
-            game.setAway_team(teamDao.getTeamIdFromAbbr(reader.getString("away_team")));
+            game.setHome_team(reader.getString("home_team"));
+            game.setAway_team(reader.getString("away_team"));
             game.setSeason(reader.getInt("season"));
             game.setSeason_type(reader.getString("season_type"));
             game.setWeek(reader.getInt("week"));
+            Date date = reader.getDate("game_date");
+            if (date != null) {
+               game.setGame_date(date.toLocalDate());
+            }
         } catch (Exception e) {
             Logger.logError(e);
         }

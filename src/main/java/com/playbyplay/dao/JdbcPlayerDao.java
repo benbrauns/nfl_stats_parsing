@@ -42,7 +42,7 @@ public class JdbcPlayerDao extends BaseDao implements PlayerDao {
             }
             Logger.logPlayersAdded(countPlayers() - numBefore);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.logError(e);
         }
         //}
     }
@@ -56,27 +56,30 @@ public class JdbcPlayerDao extends BaseDao implements PlayerDao {
 
 
     @Override
-    public int playerExists(Player player) {
+    public String playerExists(Player player) {
         String sql =
                 "SELECT * " +
                         "FROM player " +
                         "WHERE gsis_id = ?;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, player.getGsis_id());
         if (rowSet.next()) {
-            return rowSet.getInt("player_id");
+            return rowSet.getString("gsis_id");
         }
-        return -1;
+        return "";
     }
 
     @Override
-    public int insertPlayer(Player player) {
-        if (player.getGsis_id().equals("")) {
+    public String insertPlayer(Player player) {
+        if (player.getGsis_id() == null) {
+            return "";
+        }
+        else if (player.getGsis_id().equals("")) {
             Exception e = new Exception("Player {" + player + "} has no gsid_id");
             Logger.logError(e);
-            return -1;
+            return "";
         }
-        Integer id = playerExists(player);
-        if (id != -1) {
+        String id = playerExists(player);
+        if (!id.isBlank()) {
             return id;
         }
 
@@ -86,7 +89,7 @@ public class JdbcPlayerDao extends BaseDao implements PlayerDao {
                         "RETURNING player_id;";
         id = jdbcTemplate.queryForObject(
                 sql,
-                Integer.class,
+                String.class,
                 player.getStatus(),
                 player.getDisplay_name(),
                 player.getFirst_name(),
@@ -131,7 +134,7 @@ public class JdbcPlayerDao extends BaseDao implements PlayerDao {
                 players.add(mapPlayer(reader));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.logError(e);
         }
 
         return players;

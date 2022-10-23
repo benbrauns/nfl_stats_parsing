@@ -1,5 +1,7 @@
 package com.playbyplay.dao.importutil;
 
+import com.playbyplay.Logger;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,11 +9,9 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CsvReader implements ResultSet {
 
@@ -231,7 +231,14 @@ public class CsvReader implements ResultSet {
     public String getString(String columnName) {
         try {
             if (validColName(columnName)) {
-                return getColValue(columnName);
+                String colVal = getColValue(columnName);
+                if (colVal == null) {
+                    return null;
+                } else if (colVal.isBlank()) {
+                    return null;
+                } else {
+                    return colVal;
+                }
             }
         } catch (Exception e) {
             ImportLogger.logError(e);
@@ -241,6 +248,22 @@ public class CsvReader implements ResultSet {
 
     @Override
     public boolean getBoolean(String columnLabel) throws SQLException {
+        try {
+            if (validColName(columnLabel)) {
+                String colVal = getColValue(columnLabel);
+                if (colVal == null) {
+                    return false;
+                } else if (colVal.isBlank()) {
+                    return false;
+                }
+                else {
+                    BigDecimal val = new BigDecimal(colVal);
+                    return val.intValue() == 1;
+                }
+            }
+        } catch (Exception e) {
+            ImportLogger.logError(e);
+        }
         return false;
     }
 
@@ -294,6 +317,7 @@ public class CsvReader implements ResultSet {
 
     @Override
     public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
+
         return null;
     }
 
@@ -404,6 +428,20 @@ public class CsvReader implements ResultSet {
 
     @Override
     public BigDecimal getBigDecimal(String columnLabel) throws SQLException {
+        try {
+            if (validColName(columnLabel)) {
+                String colVal = getColValue(columnLabel);
+                if (colVal == null) {
+                    return null;
+                } else if (colVal.equalsIgnoreCase("NA") || colVal.equalsIgnoreCase("")) {
+                    return null;
+                } else {
+                    return new BigDecimal(colVal);
+                }
+            }
+        } catch (Exception e) {
+            ImportLogger.logError(e);
+        }
         return null;
     }
 

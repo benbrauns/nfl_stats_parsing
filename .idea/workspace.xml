@@ -75,9 +75,14 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/playbyplay/Logger.java</url>
           <line>4</line>
-          <option name="timeStamp" value="3" />
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((PSQLException)((DataIntegrityViolationException)e).cause).serverError" custom="org.springframework.dao.DataIntegrityViolationException,org.postgresql.util.PSQLException" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

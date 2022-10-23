@@ -6,7 +6,7 @@ public class Logger {
     }
 
     public static void logPlayersAdded(int numOfPlayers) {
-        System.out.printf("%s player(s) were added", numOfPlayers);
+        System.out.printf("%s player(s) were added\n", numOfPlayers);
     }
 
     public static void logGameYearAdded(String url) {
