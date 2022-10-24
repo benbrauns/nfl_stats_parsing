@@ -20,8 +20,6 @@ public class DataImporter {
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres1");
 
-
-
         List<String> pbpLinks = getPbpLinks();
 
         TeamDao teamDao = new JdbcTeamDao(dataSource);

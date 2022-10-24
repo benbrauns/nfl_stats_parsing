@@ -31,6 +31,7 @@ public class Play {
 
     //players and yardage
     private String td_player_id;
+    private String passer_player_id;
     private Integer air_yards;
     private Integer yards_after_catch;
     private Integer passing_yards;
@@ -275,6 +276,14 @@ public class Play {
 
     public void setTd_player_id(String td_player_id) {
         this.td_player_id = td_player_id;
+    }
+
+    public String getPasser_player_id() {
+        return passer_player_id;
+    }
+
+    public void setPasser_player_id(String passer_player_id) {
+        this.passer_player_id = passer_player_id;
     }
 
     public Integer getAir_yards() {
