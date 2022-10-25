@@ -6,6 +6,7 @@ import com.playbyplay.model.Game;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
+import javax.sql.RowSet;
 import java.net.URL;
 import java.sql.Date;
 import java.util.*;
@@ -28,7 +29,8 @@ public class JdbcGameDao extends BaseDao implements GameDao {
                     continue;
                 }
                 URL url = new URL(year);
-                try (CsvRowSet reader = new CsvRowSet(url)) {
+                try {
+                    CsvRowSet reader = new CsvRowSet(url);
                     Map<String, Game> games = gameMapMapper(reader);
                     insertObjectList(Game.class, new ArrayList<>(games.values()));
                     Logger.logGameYearAdded(year);
@@ -40,6 +42,23 @@ public class JdbcGameDao extends BaseDao implements GameDao {
         } catch (Exception e) {
             Logger.logError(e);
         }
+    }
+
+    @Override
+    public Game getGameById(String game_id) {
+        String sql =
+                "SELECT * " +
+                "FROM game " +
+                "WHERE game_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, game_id);
+        if (rowSet.next()) {
+            return objectMapper(Game.class, rowSet);
+        }
+
+        return null;
+    }
+    private void test(RowSet set) {
+
     }
 
     private boolean gameExists(Game game) {
@@ -68,7 +87,7 @@ public class JdbcGameDao extends BaseDao implements GameDao {
         return validateInteger(max);
     }
 
-    private Map<String, Game> gameMapMapper(CsvRowSet reader) {
+    private Map<String, Game> gameMapMapper(SqlRowSet reader) {
         Map<String, Game> games = new HashMap<>();
         try {
             while (reader.next()) {

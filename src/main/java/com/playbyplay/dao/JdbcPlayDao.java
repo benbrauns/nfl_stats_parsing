@@ -28,7 +28,8 @@ public class JdbcPlayDao extends BaseDao implements PlayDao {
         try {
             for (String year : pbpLinks) {
                 URL url = new URL(year);
-                try (CsvRowSet reader = new CsvRowSet(url)) {
+                try {
+                    CsvRowSet reader = new CsvRowSet(url);
                     List<Play> plays = objectListMapper(Play.class, reader);
                     insertObjectList(Play.class, plays);
                     Logger.logGameYearAdded(year);

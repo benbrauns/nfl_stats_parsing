@@ -1,6 +1,7 @@
 package com.playbyplay.dao.importutil;
 
 import com.playbyplay.dao.*;
+import com.playbyplay.model.Game;
 import com.playbyplay.model.Play;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -20,19 +21,27 @@ public class DataImporter {
         dataSource.setUrl("jdbc:postgresql://localhost:5432/NFL_PBP");
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres1");
-
         List<String> pbpLinks = getPbpLinks();
-
+        GameDao gameDao = new JdbcGameDao(dataSource);
         TeamDao teamDao = new JdbcTeamDao(dataSource);
+        PlayerDao playerImporter = new JdbcPlayerDao(dataSource);
+        PlayDao playDao = new JdbcPlayDao(dataSource);
+
+        Game test = gameDao.getGameById("2022_03_PIT_CLE");
+        System.out.println(test.getAway_team());
+        System.exit(1);
+
+
+
         teamDao.createTeams();
 
-        PlayerDao playerImporter = new JdbcPlayerDao(dataSource);
+
         playerImporter.updatePlayersFromSourceCsv();
 
-        GameDao gameDao = new JdbcGameDao(dataSource);
+
         gameDao.importGames(pbpLinks);
 
-        PlayDao playDao = new JdbcPlayDao(dataSource);
+
         playDao.importPlays(pbpLinks);
 
 

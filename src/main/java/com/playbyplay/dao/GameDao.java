@@ -13,6 +13,6 @@ public interface GameDao {
      */
     void importGames(List<String> pbpLinks);
 
-
+    Game getGameById(String game_id);
 
 }

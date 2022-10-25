@@ -201,7 +201,7 @@ public class BaseDao {
 
 
 
-    protected <T> List<T> objectListMapper(Class<T> type, ResultSet rowSet) {
+    protected <T> List<T> objectListMapper(Class<T> type, SqlRowSet rowSet) {
         List<T> newList = new ArrayList<>();
         try {
             while (rowSet.next()) {
@@ -213,7 +213,7 @@ public class BaseDao {
         return newList;
     }
 
-    protected <T> T objectMapper(Class<T> type, ResultSet resultSet) {
+    protected <T> T objectMapper(Class<T> type, SqlRowSet resultSet) {
         try {
             T newObj = type.getDeclaredConstructor().newInstance();
             List<Field> presentFields = getPresentFields(type, resultSet);
@@ -250,7 +250,7 @@ public class BaseDao {
         return null;
     }
 
-    protected List<Field> getPresentFields(Class<?> type, ResultSet resultSet) {
+    protected List<Field> getPresentFields(Class<?> type, SqlRowSet resultSet) {
         Field[] fields = type.getDeclaredFields();
         List<Field> presentFields = new ArrayList<>();
         for (Field field : fields) {

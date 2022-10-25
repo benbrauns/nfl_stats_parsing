@@ -18,7 +18,8 @@ public class JdbcTeamDao extends BaseDao implements TeamDao {
     @Override
     public void createTeams() {
         File teamFile = new File("src/main/resources/teams.csv");
-        try (CsvRowSet reader = new CsvRowSet(teamFile.toURI().toURL())) {
+        try {
+            CsvRowSet reader = new CsvRowSet(teamFile.toURI().toURL());
             List<Team> teams = objectListMapper(Team.class, reader);
             insertObjectList(Team.class, teams);
         } catch (Exception e) {
