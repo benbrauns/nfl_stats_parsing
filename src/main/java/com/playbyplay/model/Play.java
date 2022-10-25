@@ -2,6 +2,7 @@ package com.playbyplay.model;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Play {
     private Integer play_id;
@@ -16,7 +17,7 @@ public class Play {
     private Integer ydstogo;
     private Integer ydsnet;
     //desc
-    private String play_desc;
+    private String desc;
     private String play_type;
     private Integer yards_gained;
     private String pass_location;
@@ -42,6 +43,7 @@ public class Play {
     private Integer rushing_yards;
         //defense
     private String interception_player_id;
+    private String sack_player_id;
         //special teams
     private String punt_returner_player_id;
     private String kickoff_returner_player_id;
@@ -93,6 +95,9 @@ public class Play {
     private Boolean pass_attempt;
     private Boolean sack;
     private Boolean touchdown;
+    private LocalDateTime start_time;
+    private LocalDateTime time_of_day;
+
 
     public Integer getPlay_id() {
         return play_id;
@@ -182,12 +187,12 @@ public class Play {
         this.ydsnet = ydsnet;
     }
 
-    public String getPlay_desc() {
-        return play_desc;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setPlay_desc(String play_desc) {
-        this.play_desc = play_desc;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getPlay_type() {
@@ -716,5 +721,21 @@ public class Play {
 
     public void setTouchdown(Boolean touchdown) {
         this.touchdown = touchdown;
+    }
+
+    public LocalDateTime getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(LocalDateTime start_time) {
+        this.start_time = start_time;
+    }
+
+    public LocalDateTime getTime_of_day() {
+        return time_of_day;
+    }
+
+    public void setTime_of_day(LocalDateTime time_of_day) {
+        this.time_of_day = time_of_day;
     }
 }

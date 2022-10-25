@@ -1,19 +1,22 @@
 package com.playbyplay.dao.importutil;
 
-import com.playbyplay.Logger;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
-public class CsvReader implements ResultSet {
+public class CsvRowSet implements ResultSet {
 
     private static final Character DELIMINATOR = ',';
     private String currentLine = null;
@@ -21,7 +24,7 @@ public class CsvReader implements ResultSet {
     private BufferedReader in;
     private Map<String, Integer> columnNameIndexes = new HashMap<>();
 
-    public CsvReader(URL url) {
+    public CsvRowSet(URL url) {
         try {
             in = new BufferedReader(new InputStreamReader(url.openStream()));
             if ((currentLine = in.readLine()) != null) {
@@ -354,6 +357,20 @@ public class CsvReader implements ResultSet {
 
     @Override
     public Timestamp getTimestamp(String columnLabel) throws SQLException {
+        try {
+            if (validColName(columnLabel)) {
+                String colVal = getColValue(columnLabel);
+                if (colVal == null) {
+                    return null;
+                } else if (colVal.isBlank() || !validColName("game_date")) {
+                    return null;
+                } else{
+                    return Timestamp.valueOf(getColValue("game_date") + " " + colVal);
+                }
+            }
+        } catch (Exception e) {
+            ImportLogger.logError(e);
+        }
         return null;
     }
 

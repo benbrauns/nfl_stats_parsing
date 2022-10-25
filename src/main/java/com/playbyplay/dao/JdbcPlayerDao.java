@@ -1,7 +1,7 @@
 package com.playbyplay.dao;
 
 import com.playbyplay.Logger;
-import com.playbyplay.dao.importutil.CsvReader;
+import com.playbyplay.dao.importutil.CsvRowSet;
 import com.playbyplay.model.Player;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -34,12 +34,10 @@ public class JdbcPlayerDao extends BaseDao implements PlayerDao {
         try {
             //TODO: uncomment this when ready for production
             //playersUrl = new URL(address);
-            CsvReader reader = new CsvReader(playersUrl);
-            List<Player> players = playerListMapper(reader);
+            CsvRowSet reader = new CsvRowSet(playersUrl);
+            List<Player> players = objectListMapper(Player.class, reader);
             int numBefore = countPlayers();
-            for (Player player : players) {
-                insertPlayer(player);
-            }
+            insertObjectList(Player.class, players);
             Logger.logPlayersAdded(countPlayers() - numBefore);
         } catch (Exception e) {
             Logger.logError(e);

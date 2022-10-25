@@ -1,6 +1,7 @@
 package com.playbyplay.dao.importutil;
 
 import com.playbyplay.dao.*;
+import com.playbyplay.model.Play;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.net.HttpURLConnection;
@@ -43,7 +44,7 @@ public class DataImporter {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         //TODO: change this to 1999 leaving as 2022 so it only imports one year
-        for (Integer i = 1999; i <= currentYear; i++) {
+        for (Integer i = 2022; i <= currentYear; i++) {
             String address = (linkFront + i.toString() + ".csv");
             if (urlExists(address)) {
                 years.add(address);

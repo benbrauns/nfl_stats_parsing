@@ -1,11 +1,11 @@
 package com.playbyplay.model;
 
 public class Team {
-    private int team_id;
+    private Integer team_id;
     private String name;
     private String abbr;
     private String conference;
-    private String divison;
+    private String division;
 
     public int getTeam_id() {
         return team_id;
@@ -39,23 +39,13 @@ public class Team {
         this.conference = conference;
     }
 
-    public String getDivison() {
-        return divison;
+    public String getDivision() {
+        return division;
     }
 
-    public void setDivison(String divison) {
-        this.divison = divison;
+    public void setDivision(String division) {
+        this.division = division;
     }
 
 
-    public Team() {
-
-    };
-
-    public Team(String name, String abbr, String conference, String divison) {
-        this.name = name;
-        this.abbr = abbr;
-        this.conference = conference;
-        this.divison = divison;
-    }
 }

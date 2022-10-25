@@ -6,9 +6,9 @@ public class Game {
     private String game_id;
     private String home_team;
     private String away_team;
-    private int season;
+    private Integer season;
     private String season_type;
-    private int week;
+    private Integer week;
     private LocalDate game_date;
 
     public String getGame_id() {
@@ -35,11 +35,11 @@ public class Game {
         this.away_team = away_team;
     }
 
-    public int getSeason() {
+    public Integer getSeason() {
         return season;
     }
 
-    public void setSeason(int season) {
+    public void setSeason(Integer season) {
         this.season = season;
     }
 
@@ -51,11 +51,11 @@ public class Game {
         this.season_type = season_type;
     }
 
-    public int getWeek() {
+    public Integer getWeek() {
         return week;
     }
 
-    public void setWeek(int week) {
+    public void setWeek(Integer week) {
         this.week = week;
     }
 

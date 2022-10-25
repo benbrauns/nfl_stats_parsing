@@ -33,7 +33,6 @@ AND EXTRACT(ISODOW FROM game.game_date) = 1
 GROUP BY player.display_name
 ORDER BY SUM(passing_yards) / COUNT(*) DESC;
 
-SELECT *
-FROM player
-WHERE display_name = 'Drew Bennett';
+SELECT COUNT(*)
+FROM play;
 

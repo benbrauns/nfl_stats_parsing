@@ -13,9 +13,6 @@ public interface GameDao {
      */
     void importGames(List<String> pbpLinks);
 
-    String insertGame(Game game);
-
-    List<String> insertGameList(List<Game> games);
 
 
 }
