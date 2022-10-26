@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="NFL_PBP" />
+        <module name="nfl_stats_parsing" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="NFL_PBP" options="-parameters" />
+      <module name="nfl_stats_parsing" options="-parameters" />
     </option>
   </component>
 </project>

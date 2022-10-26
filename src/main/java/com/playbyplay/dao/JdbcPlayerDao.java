@@ -19,7 +19,7 @@ public class JdbcPlayerDao extends JdbcBaseDao implements PlayerDao {
     public JdbcPlayerDao(DataSource dataSource) {
         super(dataSource);
         try {
-            playersUrl = new File("C:\\Users\\Student\\side-projects\\NFL_PBP\\src\\main\\resources\\players.csv").toURI().toURL();
+            playersUrl = new File("src\\main\\resources\\players.csv").toURI().toURL();
         } catch (Exception e) {
             Logger.logError(e);
         }

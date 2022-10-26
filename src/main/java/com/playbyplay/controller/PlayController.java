@@ -26,8 +26,8 @@ public class PlayController {
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Play> list(@RequestParam Integer count) {
-        if (count != null) {
+    public List<Play> list(@RequestParam(defaultValue = "0") Integer count) {
+        if (count != 0) {
             return playDao.list(count);
         }
         return playDao.list();

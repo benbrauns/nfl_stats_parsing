@@ -29,9 +29,6 @@ public class DataImporter {
         PlayDao playDao = new JdbcPlayDao(dataSource);
 
 
-
-
-
         teamDao.createTeams();
 
 
@@ -52,7 +49,7 @@ public class DataImporter {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         //TODO: change this to 1999 leaving as 2022 so it only imports one year
-        for (Integer i = 1999; i <= currentYear; i++) {
+        for (Integer i = 2022; i <= currentYear; i++) {
             String address = (linkFront + i.toString() + ".csv");
             if (urlExists(address)) {
                 years.add(address);
