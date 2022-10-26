@@ -27,6 +27,7 @@ public class CsvRowSet implements SqlRowSet {
     private String[] currentLineArr = null;
     private BufferedReader in;
     private Map<String, Integer> columnNameIndexes = new HashMap<>();
+    private boolean fromMap = false;
 
     public CsvRowSet(URL url) {
         try {
@@ -38,6 +39,15 @@ public class CsvRowSet implements SqlRowSet {
         } catch (Exception e) {
             ImportLogger.logError(e);
         }
+    }
+
+    public CsvRowSet(Map<String, String> parameters) {
+        fromMap = true;
+        String[] keys = parameters.keySet().toArray(String[]::new);
+        for (int i = 0; i < keys.length; i++) {
+            columnNameIndexes.put(keys[i], i);
+        }
+        currentLineArr = parameters.values().toArray(String[]::new);
     }
 
     private void setColumnNameIndexes(String line) {
@@ -70,6 +80,8 @@ public class CsvRowSet implements SqlRowSet {
             } catch (Exception e) {
                 ImportLogger.logError(e);
             }
+        } else if (fromMap) {
+            return false;
         }
         return currentLine != null;
     }

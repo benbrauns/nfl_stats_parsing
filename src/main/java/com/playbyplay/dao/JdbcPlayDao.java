@@ -2,20 +2,15 @@ package com.playbyplay.dao;
 
 import com.playbyplay.Logger;
 import com.playbyplay.dao.importutil.CsvRowSet;
-import com.playbyplay.dao.importutil.ImportLogger;
 import com.playbyplay.model.Play;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
-public class JdbcPlayDao extends BaseDao implements PlayDao {
+public class JdbcPlayDao extends JdbcBaseDao implements PlayDao {
     JdbcGameDao gameDao;
 
     public JdbcPlayDao(DataSource dataSource) {
@@ -41,5 +36,25 @@ public class JdbcPlayDao extends BaseDao implements PlayDao {
         } catch (Exception e) {
             Logger.logError(e);
         }
+    }
+
+    @Override
+    public List<Play> list() {
+        String sql =
+                "SELECT * " +
+                "FROM play " +
+                "LIMIT 50;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        return objectListMapper(Play.class, rowSet);
+    }
+
+    @Override
+    public List<Play> list(int amount) {
+        String sql =
+                "SELECT * " +
+                        "FROM play " +
+                        "LIMIT ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, amount);
+        return objectListMapper(Play.class, rowSet);
     }
 }

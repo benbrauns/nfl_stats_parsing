@@ -8,10 +8,9 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import javax.sql.DataSource;
 import javax.sql.RowSet;
 import java.net.URL;
-import java.sql.Date;
 import java.util.*;
 
-public class JdbcGameDao extends BaseDao implements GameDao {
+public class JdbcGameDao extends JdbcBaseDao implements GameDao {
 
     private JdbcTeamDao teamDao;
 

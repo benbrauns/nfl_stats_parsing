@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class DataImporter {
 
 
@@ -27,9 +28,7 @@ public class DataImporter {
         PlayerDao playerImporter = new JdbcPlayerDao(dataSource);
         PlayDao playDao = new JdbcPlayDao(dataSource);
 
-        Game test = gameDao.getGameById("2022_03_PIT_CLE");
-        System.out.println(test.getAway_team());
-        System.exit(1);
+
 
 
 
@@ -53,7 +52,7 @@ public class DataImporter {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         //TODO: change this to 1999 leaving as 2022 so it only imports one year
-        for (Integer i = 2022; i <= currentYear; i++) {
+        for (Integer i = 1999; i <= currentYear; i++) {
             String address = (linkFront + i.toString() + ".csv");
             if (urlExists(address)) {
                 years.add(address);

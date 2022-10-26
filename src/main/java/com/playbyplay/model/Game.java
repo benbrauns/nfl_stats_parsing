@@ -1,5 +1,6 @@
 package com.playbyplay.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Game {
@@ -10,6 +11,13 @@ public class Game {
     private String season_type;
     private Integer week;
     private LocalDate game_date;
+    private BigDecimal spread_line;
+    private BigDecimal total_line;
+    private String roof;
+    private String home_coach;
+    private String away_coach;
+    private Integer temp;
+    private Integer wind;
 
     public String getGame_id() {
         return game_id;

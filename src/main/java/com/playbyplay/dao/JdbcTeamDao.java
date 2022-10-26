@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.util.List;
 
-public class JdbcTeamDao extends BaseDao implements TeamDao {
+public class JdbcTeamDao extends JdbcBaseDao implements TeamDao {
 
 
     public JdbcTeamDao(DataSource dataSource) {

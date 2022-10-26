@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class JdbcPlayerDao extends BaseDao implements PlayerDao {
+public class JdbcPlayerDao extends JdbcBaseDao implements PlayerDao {
     private URL playersUrl;
     public JdbcPlayerDao(DataSource dataSource) {
         super(dataSource);

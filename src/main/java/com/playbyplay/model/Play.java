@@ -29,6 +29,12 @@ public class Play {
     private Integer defteam_timeouts_remaining;
     private Integer posteam_score;
     private Integer defteam_score;
+    private String penalty_type;
+    private String series_result;
+    private Integer play_clock;
+    private Integer passer_jersey_number;
+    private String play_type_nfl;
+    private String penalty_team;
 
     //players and yardage
     private String td_player_id;
@@ -47,6 +53,8 @@ public class Play {
         //special teams
     private String punt_returner_player_id;
     private String kickoff_returner_player_id;
+    private Integer return_yards;
+    private Integer penalty_yards;
     private String punter_player_id;
     private String kicker_player_id;
     private Integer kick_distance;
@@ -64,6 +72,7 @@ public class Play {
     private BigDecimal epa;
     private BigDecimal air_epa;
     private BigDecimal yac_epa;
+    private BigDecimal qb_epa;
     private BigDecimal wp;
     private BigDecimal def_wp;
     private BigDecimal wpa;
@@ -95,6 +104,7 @@ public class Play {
     private Boolean pass_attempt;
     private Boolean sack;
     private Boolean touchdown;
+    private Boolean complete_pass;
     private LocalDateTime start_time;
     private LocalDateTime time_of_day;
 
