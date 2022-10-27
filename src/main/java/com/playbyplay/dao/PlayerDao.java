@@ -2,6 +2,8 @@ package com.playbyplay.dao;
 
 import com.playbyplay.model.Player;
 
+import java.util.List;
+
 public interface PlayerDao {
     /**
      * Uses the nflfastR github repository to check for players not in the database.
@@ -21,4 +23,9 @@ public interface PlayerDao {
      * @return String gsis_id for the inserted player or empty for error
      */
     String insertPlayer(Player player);
+
+    List<Player> list();
+
+    List<Player> listByDisplayName(String displayName);
+
 }

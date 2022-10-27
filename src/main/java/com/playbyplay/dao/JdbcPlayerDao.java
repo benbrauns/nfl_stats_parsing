@@ -2,6 +2,7 @@ package com.playbyplay.dao;
 
 import com.playbyplay.Logger;
 import com.playbyplay.dao.importutil.CsvRowSet;
+import com.playbyplay.model.Play;
 import com.playbyplay.model.Player;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -52,6 +53,27 @@ public class JdbcPlayerDao extends JdbcBaseDao implements PlayerDao {
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 
+    @Override
+    public List<Player> list() {
+        String sql =
+                "SELECT * " +
+                "FROM player " +
+                "LIMIT 50;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        return objectListMapper(Player.class, rowSet);
+    }
+
+    @Override
+    public List<Player> listByDisplayName(String displayName) {
+        displayName = "%" + displayName + "%";
+        String sql =
+                "SELECT * " +
+                "FROM player " +
+                "WHERE display_name ILIKE ? " +
+                "LIMIT 50;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, displayName);
+        return objectListMapper(Player.class, rowSet);
+    }
 
     @Override
     public String playerExists(Player player) {

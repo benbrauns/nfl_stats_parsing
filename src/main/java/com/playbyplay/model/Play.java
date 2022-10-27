@@ -100,7 +100,7 @@ public class Play {
     private Boolean safety;
     private Boolean penalty;
     private Boolean qb_hit;
-    private Boolean rush_attmept;
+    private Boolean rush_attempt;
     private Boolean pass_attempt;
     private Boolean sack;
     private Boolean touchdown;
@@ -701,12 +701,12 @@ public class Play {
         this.qb_hit = qb_hit;
     }
 
-    public Boolean getRush_attmept() {
-        return rush_attmept;
+    public Boolean getRush_attempt() {
+        return rush_attempt;
     }
 
-    public void setRush_attmept(Boolean rush_attmept) {
-        this.rush_attmept = rush_attmept;
+    public void setRush_attempt(Boolean rush_attempt) {
+        this.rush_attempt = rush_attempt;
     }
 
     public Boolean getPass_attempt() {

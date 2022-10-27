@@ -25,6 +25,7 @@ public class DataImporter {
         List<String> pbpLinks = getPbpLinks();
         GameDao gameDao = new JdbcGameDao(dataSource);
         TeamDao teamDao = new JdbcTeamDao(dataSource);
+        RosterDao rosterDao = new JdbcRosterDao(dataSource);
         PlayerDao playerImporter = new JdbcPlayerDao(dataSource);
         PlayDao playDao = new JdbcPlayDao(dataSource);
 
@@ -34,6 +35,7 @@ public class DataImporter {
 
         playerImporter.updatePlayersFromSourceCsv();
 
+        rosterDao.importPlays(getRosterLinks());
 
         gameDao.importGames(pbpLinks);
 
@@ -49,6 +51,21 @@ public class DataImporter {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         //TODO: change this to 1999 leaving as 2022 so it only imports one year
+        for (Integer i = 1999; i <= currentYear; i++) {
+            String address = (linkFront + i.toString() + ".csv");
+            if (urlExists(address)) {
+                years.add(address);
+            }
+        }
+        return years;
+    }
+
+    private List<String> getRosterLinks() {
+        String linkFront = "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_";
+        List<String> years = new ArrayList<>();
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
+        //TODO: change this to 2002 leaving as 2022 so it only imports one year
         for (Integer i = 2022; i <= currentYear; i++) {
             String address = (linkFront + i.toString() + ".csv");
             if (urlExists(address)) {

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS player, play, game, team CASCADE;
+DROP TABLE IF EXISTS player, play, game, team, roster CASCADE;
 
 CREATE TABLE player(
 	player_id serial,
@@ -65,6 +65,25 @@ CREATE TABLE game (
     CONSTRAINT fk_game_away_team FOREIGN KEY (away_team) REFERENCES public.team (abbr),
     CONSTRAINT fk_game_home_team FOREIGN KEY (home_team) REFERENCES public.team (abbr)
 );
+
+CREATE TABLE roster (
+	roster_id serial,
+	season int,
+	week int,
+	team VARCHAR(5),
+	position VARCHAR(10),
+	depth_chart_position int,
+	jersey_number int,
+	status VARCHAR(15),
+	gsis_id VARCHAR(10),
+	ngs_position VARCHAR(25),
+	status_description_abbr VARCHAR(25),
+	CONSTRAINT PK_roster PRIMARY KEY (roster_id),
+	CONSTRAINT FK_roster_team FOREIGN KEY (team) REFERENCES team(abbr),
+	CONSTRAINT FK_roster_gsis_id FOREIGN KEY (gsis_id) REFERENCES player(gsis_id)
+);
+
+
 
 --REFERENCE: https://nflreadr.nflverse.com/articles/dictionary_pbp.html
 
@@ -155,7 +174,7 @@ CREATE TABLE play
     safety boolean,
     penalty boolean,
     qb_hit boolean,
-    rush_attmept boolean,
+    rush_attempt boolean,
     pass_attempt boolean,
     sack boolean,
     touchdown boolean,

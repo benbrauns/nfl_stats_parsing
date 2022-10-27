@@ -71,6 +71,10 @@ public class JdbcBaseDao implements BaseDao {
         return false;
     }
 
+    protected String addIlikeFormat(String val) {
+        return "%" + val + "%";
+    }
+
     protected Integer validateInteger(Integer intVal) {
         if (intVal == null) {
             return -1;
